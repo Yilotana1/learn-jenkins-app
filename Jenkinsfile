@@ -52,6 +52,7 @@ pipeline {
             steps {
                 sh '''
                     aws s3 ls
+                    aws s3 sync build $WEBSITE_S3_LINK
                 '''
             }
         }
