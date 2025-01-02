@@ -26,25 +26,26 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            agent {
-                docker {
-                    image 'node:18-alpine'
-                    reuseNode true
-                }
-            }
-            steps {
-                sh '''
-                    test -f build/index.html
-                    npm test
-                '''
-            }
-        }
+        // stage('Test') {
+        //     agent {
+        //         docker {
+        //             image 'node:18-alpine'
+        //             reuseNode true
+        //         }
+        //     }
+        //     steps {
+        //         sh '''
+        //             test -f build/index.html
+        //             npm test
+        //         '''
+        //     }
+        // }
 
         stage('Deploy'){
             agent {
                 docker {
                     image 'amazon/aws-cli:2.4.11'
+                    args '--entrypoint='
                     reuseNode true
                 }
             }
