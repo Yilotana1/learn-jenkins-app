@@ -37,10 +37,24 @@ pipeline {
                 sh '''
                     test -f build/index.html
                     npm test
-                    echo $AWS_DEFAULT_REGION
                 '''
             }
         }
+
+        stage('Deploy'){
+            agent {
+                docker {
+                    image 'amazon/aws-cli:2.4.11'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh '''
+                    aws s3 ls
+                '''
+            }
+        }
+
     }
     post {
             always {
